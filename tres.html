@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Proyecto VR</title>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <style>
+        .cubo {
+            width: 50px;
+            height: 50px;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+    <a-scene>
+        <a-sky src="./img/dreamlike_montain_see.jpg"></a-sky>
+
+        <!-- Cubos -->
+        <a-entity class="objetos" geometry="primitive: box" material="color: red" position="0 2 -5"></a-entity>
+        <a-entity class="objetos" geometry="primitive: box" material="color: blue" position="2 2 -5"></a-entity>
+        <a-entity class="objetos" geometry="primitive: box" material="color: green" position="-2 2 -5"></a-entity>
+
+        <!-- Conos -->
+        <a-entity class="objetos" geometry="primitive: cone" material="color: yellow" position="0 3 -5" rotation="0 0 0"></a-entity>
+        <a-entity class="objetos" geometry="primitive: cone" material="color: purple" position="2 3 -5" rotation="0 0 0"></a-entity>
+        <a-entity class="objetos" geometry="primitive: cone" material="color: cyan" position="-2 3 -5" rotation="0 0 0"></a-entity>
+
+        <!-- Esferas -->
+        <a-entity class="objetos" geometry="primitive: sphere" material="color: orange" position="0 4 -5" rotation="0 0 0"></a-entity>
+        <a-entity class="objetos" geometry="primitive: sphere" material="color: pink" position="2 4 -5" rotation="0 0 0"></a-entity>
+        <a-entity class="objetos" geometry="primitive: sphere" material="color: gray" position="-2 4 -5" rotation="0 0 0"></a-entity>
+
+        <a-camera position="0 1.6 0"></a-camera>
+    </a-scene>
+
+    <script>
+        var objetos = document.getElementsByClassName("objetos");
+        var intervalo;
+
+        for (var i = 0; i < objetos.length; i++) {
+            objetos[i].addEventListener("click", function() {
+                var objeto = this;
+                objeto.setAttribute("visible", false);
+                clearInterval(intervalo);
+                setTimeout(function() {
+                    objeto.setAttribute("visible", true);
+                    moverObjeto(objeto);
+                }, 3000);
+            });
+            moverObjeto(objetos[i]);
+        }
+
+        function moverObjeto(objeto) {
+            var rotacionInicial = objeto.getAttribute("rotation");
+            intervalo = setInterval(function() {
+                var rotacionActual = objeto.getAttribute("rotation");
+                objeto.setAttribute("rotation", {
+                    x: rotacionActual.x,
+                    y: rotacionActual.y + 1,
+                    z: rotacionActual.z
+                });
+            }, 10);
+        }
+    </script>
+</body>
+</html>
+
+
